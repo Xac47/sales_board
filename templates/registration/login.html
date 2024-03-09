@@ -1,0 +1,17 @@
+{% extends 'registration/base.html' %}
+
+{% block main %}
+
+
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{ form.username }}
+        {{ form.password }}
+        <button type="submit">submit</button>
+    </form>
+    <a href="{% url 'sign_up' %}">SignUp</a>
+    <a href="{% url 'password_reset' %}">Reset Password</a>
+
+{% endblock %}
