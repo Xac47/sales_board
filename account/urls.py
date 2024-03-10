@@ -5,6 +5,7 @@ from account import views
 
 urlpatterns = [
     path('login/', views.MyLoginView.as_view(), name='login'),
+    path("password_reset/", views.PasswordResetView.as_view(), name="password_reset"),
     path('', include('django.contrib.auth.urls')),
 
     path('confirm_email/', TemplateView.as_view(template_name='registration/confirm_email.html'),
