@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'account.apps.AccountConfig',
+    'announcement.apps.AnnouncementConfig',
 
     'django_recaptcha',
 ]
