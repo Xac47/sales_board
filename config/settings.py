@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
 
     'django_recaptcha',
+    'mptt',
 ]
 
 MIDDLEWARE = [
