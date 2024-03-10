@@ -1,20 +1,27 @@
 from django import forms
-from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.forms import (
-    AuthenticationForm as DjangoAuthenticationForm,
+    AuthenticationForm as AuthenticationFormDjango,
     UserCreationForm as UserCreationFormDjango,
-    UserChangeForm as UserChangeFormDjango
+    UserChangeForm as UserChangeFormDjango,
+    PasswordResetForm as PasswordResetFormDjango
 )
 from django.core.exceptions import ValidationError
+
+from django.conf import settings
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import *
 
 from .utils import send_email_for_verify
 
 User = get_user_model()
 
 
-class AuthenticationForm(DjangoAuthenticationForm):
+class AuthenticationForm(AuthenticationFormDjango):
+    recaptcha = ReCaptchaField(widget=ReCaptchaV2Checkbox, public_key=settings.RECAPTCHA_PUBLIC_KEY,
+                               private_key=settings.RECAPTCHA_PRIVATE_KEY, label='')
+
     username = forms.EmailField(
         label='',
         widget=forms.EmailInput(attrs={'placeholder': 'Email'})
@@ -64,6 +71,9 @@ class AuthenticationForm(DjangoAuthenticationForm):
 
 
 class UserCreationForm(UserCreationFormDjango):
+    recaptcha = ReCaptchaField(widget=ReCaptchaV2Checkbox, public_key=settings.RECAPTCHA_PUBLIC_KEY,
+                               private_key=settings.RECAPTCHA_PRIVATE_KEY, label='')
+
     email = forms.EmailField(
         label='',
         widget=forms.EmailInput(attrs={'placeholder': 'Email'}),
@@ -89,3 +99,8 @@ class UserChangeForm(UserChangeFormDjango):
     class Meta:
         model = User
         fields = ('email',)
+
+
+class PasswordResetForm(PasswordResetFormDjango):
+    recaptcha = ReCaptchaField(widget=ReCaptchaV2Checkbox, public_key=settings.RECAPTCHA_PUBLIC_KEY,
+                               private_key=settings.RECAPTCHA_PRIVATE_KEY, label='')
