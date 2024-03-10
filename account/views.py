@@ -1,10 +1,10 @@
 from django.contrib.auth import login, authenticate, get_user_model
 from django.contrib.auth.tokens import default_token_generator as token_generator
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordResetView as PasswordResetViewDjango
 from django.core.exceptions import ValidationError
 from django.utils.http import urlsafe_base64_decode
 
-from .forms import UserCreationForm, AuthenticationForm
+from .forms import UserCreationForm, AuthenticationForm, PasswordResetForm
 from django.shortcuts import render, redirect
 from django.views import View
 
@@ -65,3 +65,7 @@ class SignUpView(View):
             'form': form,
         }
         return render(request, self.template_name, context)
+
+
+class PasswordResetView(PasswordResetViewDjango):
+    form_class = PasswordResetForm
