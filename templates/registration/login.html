@@ -9,6 +9,7 @@
         {{ form.non_field_errors }}
         {{ form.username }}
         {{ form.password }}
+        {{ form.recaptcha }}
         <button type="submit">submit</button>
     </form>
     <a href="{% url 'sign_up' %}">SignUp</a>
