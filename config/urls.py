@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('profile/', TemplateView.as_view(template_name='profile/profile.html'), name='profile'),
     path('account/', include('account.urls')),
-
+    path('product/', include('product.urls')),
 ]
 
 if settings.DEBUG:
